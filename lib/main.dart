@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foody/screens/home_page.dart';
+import 'package:provider/provider.dart';
+import 'models/cart.dart';
 void main() {
   runApp(MyApp());
 }
@@ -8,7 +10,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider<Cart>(
+      create: (context) => Cart(),
+      child: MaterialApp(
       title: 'Foody',
       theme: ThemeData(
         // This is the theme of your application.
@@ -27,6 +31,6 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
-    );
+    ));
   }
 }

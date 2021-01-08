@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foody/screens/cart_page.dart';
 import 'categories_page.dart';
-import 'meals_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:foody/models/cart.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -37,6 +38,9 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   Widget build(BuildContext context) {
+    var c = Provider.of<Cart>(context);
+    var cart = c.items;
+    int _counter=cart.values.length;
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -59,7 +63,61 @@ class _HomePageState extends State<HomePage> {
           activeColor: Colors.white,
           items: [
             BottomNavigationBarItem(icon:pageIndex!=0?Icon( Icons.store_outlined,color: Colors.black,):Icon( Icons.store_mall_directory,color: Colors.black,),),
-            BottomNavigationBarItem(icon:pageIndex==1?Icon( Icons.shopping_bag_rounded,color: Colors.black,):Icon( Icons.shopping_bag_outlined,color: Colors.black,),),
+            BottomNavigationBarItem(icon:pageIndex==1?
+              Stack(
+              children: <Widget>[
+                 Icon(Icons.shopping_bag,color: Colors.black,),
+                 Positioned(
+                  right: 0,
+                  child:  Container(
+                    padding: EdgeInsets.all(1),
+                    decoration:  BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '$_counter',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            ):
+              Stack(
+              children: <Widget>[
+                Icon(Icons.shopping_bag_outlined,color: Colors.black,),
+                Positioned(
+                  right: 0,
+                  child:  Container(
+                    padding: EdgeInsets.all(1),
+                    decoration:  BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '$_counter',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
+            )),
 
           ],
         ),
