@@ -26,11 +26,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/bg.jpg"), fit: BoxFit.cover)),
-          child: HomePage(title: 'Foody')),
+      home: HomePage(),
     );
   }
 }

@@ -1,90 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:foody/services/api.dart';
-import 'package:foody/models/category.dart';
+import 'package:foody/screens/cart_page.dart';
+import 'categories_page.dart';
+import 'meals_page.dart';
+import 'package:flutter/cupertino.dart';
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
   @override
   _HomePageState createState() => _HomePageState();
 }
-
 class _HomePageState extends State<HomePage> {
-  List<Category> categories;
-  String error="";
-  bool loading=false;
-  getCategories() async {
-    setState(() {
-      error="";
-      loading=true;
-    });
-    try{
-      final cat = await Api.apiClient.getAllCategories();
-      setState(() {
-        loading=false;
-        categories = cat;
-      });
-    }catch(e){
-      setState(() {
-        error=e.toString();
-        loading=false;
-      });
-
-    }
-  }
+  int pageIndex=0;
+  PageController pageController;
   @override
   void initState() {
     // TODO: implement initState
-    getCategories();
     super.initState();
+    pageController=PageController(initialPage: 0);
+  }
+
+  onPageChanged(int pageIndex){
+    setState(() {
+      this.pageIndex=pageIndex;
+    });
+  }
+  onTap(int pageIndex){
+    pageController.animateToPage(
+        pageIndex,
+        duration: Duration(milliseconds:500 ),
+        curve: Curves.easeInOut
+    );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController.dispose();
   }
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/bg.jpg"), fit: BoxFit.cover)),
+      child: Scaffold(
         backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(widget.title, style: TextStyle(color: Colors.white),),
-      ),
-      body:
-      loading==true? Center(child: Text('Loading'),):error!=""?Center(child: Text(error),):GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: .9,
-        children: List.generate(categories.length, (index) {
-          return GestureDetector(
-              onTap: () {
+        body: PageView(
+          children: <Widget>[
+            CategoriesPage(),
+            CartPage(),
+          ],
+          controller: pageController,
+          onPageChanged: onPageChanged,
+          physics: NeverScrollableScrollPhysics(),
+        ),
+        bottomNavigationBar: CupertinoTabBar(
+          backgroundColor: Colors.black.withOpacity(0.1),
+          currentIndex: pageIndex,
+          onTap: onTap,
+          activeColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(icon:pageIndex!=0?Icon( Icons.store_outlined,color: Colors.black,):Icon( Icons.store_mall_directory,color: Colors.black,),),
+            BottomNavigationBarItem(icon:pageIndex==1?Icon( Icons.shopping_bag_rounded,color: Colors.black,):Icon( Icons.shopping_bag_outlined,color: Colors.black,),),
 
-              },
-              child: Card(
-                color: Colors.white.withOpacity(0.8),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white70, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(categories[index].image),
-                          fit: BoxFit.fitWidth,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    Text(categories[index].name)
-                  ],
-                ),
-              ));
-        }),
+          ],
+        ),
       ),
     );
+
   }
+
 }
