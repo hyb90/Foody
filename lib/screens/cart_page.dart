@@ -20,40 +20,51 @@ class CartPage extends StatelessWidget {
           IconButton(icon: Icon(Icons.clear,color: Colors.white,), onPressed: (){Provider.of<Cart>(context, listen: false).clear();})
         ],
       ),
-      body:cart.length==0?Center(child: Text('There are no items in the cart yet',style: TextStyle(color: Colors.white),),) :ListView.builder(
-        itemCount: cart.length,
-        itemBuilder: (context, index) {
-          return Card(
-            color: Colors.white.withOpacity(0.8),
-            child: ListTile(
-              leading: Container(
-                height: 70,
-                width: 70,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(cart.values.toList()[index].image),
-                    fit: BoxFit.fitWidth,
+      body:cart.length==0?Center(child: Text('There are no items in the cart yet',style: TextStyle(color: Colors.white),),) :Column(
+        children: [
+          Flexible(
+            child: ListView.builder(
+              itemCount: cart.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  color: Colors.white.withOpacity(0.8),
+                  child: ListTile(
+                    leading: Container(
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(cart.values.toList()[index].image),
+                          fit: BoxFit.fitWidth,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    title: Text('Item Count: ${cart.values.toList()[index].quantity}'),
+                    subtitle:Text('Unit Price: ${cart.values.toList()[index].price}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.delete,color: Colors.black,),
+                          onPressed: () {
+                            Provider.of<Cart>(context, listen: false).removeSingleItem(cart.values.toList()[index].id);
+                          },
+                        ),
+                        IconButton(icon: Icon(Icons.clear,), onPressed: (){Provider.of<Cart>(context, listen: false).removeItem(cart.values.toList()[index].id);})
+                      ],
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              title: Text('Item Count: ${cart.values.toList()[index].quantity}'),
-              subtitle:Text('Unit Price: ${cart.values.toList()[index].price}'),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.delete,color: Colors.black,),
-                    onPressed: () {
-                      Provider.of<Cart>(context, listen: false).removeSingleItem(cart.values.toList()[index].id);
-                    },
-                  ),
-                  IconButton(icon: Icon(Icons.clear,), onPressed: (){Provider.of<Cart>(context, listen: false).removeItem(cart.values.toList()[index].id);})
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
+          ),
+          RaisedButton(
+              child: Text('Place an Order'),
+              elevation: 6,
+              color: Colors.white.withOpacity(0.8),
+              onPressed: (){})
+        ],
       ),
     );
   }

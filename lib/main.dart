@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foody/screens/home_page.dart';
+import 'package:foody/screens/splash_page.dart';
 import 'package:provider/provider.dart';
 import 'models/cart.dart';
 void main() {
@@ -13,6 +14,12 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<Cart>(
       create: (context) => Cart(),
       child: MaterialApp(
+        builder: (BuildContext context, Widget widget) {
+          ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+            return buildError(context, errorDetails);
+          };
+          return widget;
+        },
       title: 'Foody',
       theme: ThemeData(
         // This is the theme of your application.
@@ -30,7 +37,16 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: SplashPage(),
     ));
+  }
+  Widget buildError(BuildContext context, FlutterErrorDetails error) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          "sorry, something wrong happened",textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 }

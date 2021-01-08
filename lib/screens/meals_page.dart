@@ -114,7 +114,12 @@ class _MealsPageState extends State<MealsPage> {
                             Icons.shopping_bag_outlined,
                             color: Colors.white,
                           ),
-                          onPressed: null,
+                          onPressed: (){Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartPg(),
+                            ),
+                          );},
                         ),
                          Positioned(
                             child: Stack(

@@ -24,7 +24,7 @@ class CartPg extends StatelessWidget {
             IconButton(icon: Icon(Icons.clear,color: Colors.white,), onPressed: (){Provider.of<Cart>(context, listen: false).clear();})
           ],
         ),
-        body: Column(
+        body: cart.length==0?Center(child: Text('There are no items in the cart yet',style: TextStyle(color: Colors.white),),) :Column(
           children: [
             Flexible(
               child: ListView.builder(
