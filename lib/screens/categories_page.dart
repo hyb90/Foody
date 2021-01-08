@@ -46,10 +46,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Text('Foody', style: TextStyle(color: Colors.white),),
+        title: Text('Foody', style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
       ),
       body:
-      loading==true? Center(child: Text('Loading'),):error!=""?Center(child: Text(error),):GridView.count(
+      loading==true? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white),)):error!=""?Center(child: Text(error,style: TextStyle(color: Colors.white),),):GridView.count(
         crossAxisCount: 2,
         childAspectRatio: .9,
         children: List.generate(categories.length, (index) {

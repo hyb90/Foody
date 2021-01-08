@@ -141,7 +141,7 @@ class _MealsPageState extends State<MealsPage> {
             )
           ],
         ),
-        body:loading==true?Center(child: Text('Loading'),)
+        body:loading==true?Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white),))
             :GridView.count(
           crossAxisCount: 2,
           childAspectRatio: .9,
@@ -178,8 +178,7 @@ class _MealsPageState extends State<MealsPage> {
                           children: [
                         IconButton(icon: Icon(Icons.shopping_bag_rounded,color: Colors.black,),onPressed:() {
                           c.addItem(meals[index].id.toString(), meals[index].name, meals[index].image,  meals[index].price);}),
-                            loadingF?CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),):
+                            loadingF?CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),):
                             meals[index].favorite?
                             IconButton(icon: Icon(Icons.favorite,color: Colors.red,),onPressed:() {
                               removeFromFavorite(meals[index]);} ,):

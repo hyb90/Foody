@@ -20,7 +20,7 @@ class CartPage extends StatelessWidget {
           IconButton(icon: Icon(Icons.clear,color: Colors.white,), onPressed: (){Provider.of<Cart>(context, listen: false).clear();})
         ],
       ),
-      body: ListView.builder(
+      body:cart.length==0?Center(child: Text('There are no items in the cart yet',style: TextStyle(color: Colors.white),),) :ListView.builder(
         itemCount: cart.length,
         itemBuilder: (context, index) {
           return Card(

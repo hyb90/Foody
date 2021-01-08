@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'custom_exception.dart';
@@ -10,7 +9,6 @@ class Api {
   static String baseUrl = "https://my-json-server.typicode.com/hyb90/food-api/";
   static final Api apiClient = Api._();
   static final http.Client _httpClient = http.Client();
-
   Future<dynamic> getAllCategories() async {
     var data;
     try {
