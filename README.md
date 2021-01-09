@@ -8,7 +8,7 @@ This project is a simple food ordering application.
 
 Application Support below functions:
 -	Getting food data from backend API using http request. 
--	Ability browse the food based on its category.
+-	Ability to browse the food based on its category.
 -	Ability to mark any item as favorite.
 -	Ability to remove favorite mark.
 -	Ability to add multiple items and quantity to shopping cart before placing the order.
